@@ -38,7 +38,7 @@ jobs:
         run: mvn -f mongo/demo/pom.xml clean install -DskipTests=false
 
       # Step 5: Set up Docker Compose
-      - name: Set up Docker Compose
+      - name: Install Docker Compose
         run: sudo apt-get install docker-compose -y
 
       # Step 6: Build Docker image
@@ -51,5 +51,5 @@ jobs:
 
       # Step 8: Generate PlantUML diagrams
       - name: Generate PlantUML diagrams
-      run: |
-        docker run --rm -v ${{ github.workspace }}:/workspace plantuml/plantuml /TradeStore/diagram/*.puml
+        run: |
+          docker run --rm -v ${{ github.workspace }}:/workspace plantuml/plantuml /workspace/TradeStore/diagram/*.puml
