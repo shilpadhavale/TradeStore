@@ -52,7 +52,7 @@ jobs:
       # Step 8: Wait for MySQL to be ready
       - name: Wait for MySQL to be ready
         run: |
-          until docker exec mysql mysqladmin ping -h"mysql" --silent; do
+          until docker exec mysql mysqladmin ping -h mysql --silent; do
             echo "Waiting for MySQL..."
             sleep 5
           done
