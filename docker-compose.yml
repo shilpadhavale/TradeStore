@@ -1,7 +1,6 @@
 version: '3.8'
 
 services:
-  # MongoDB service
   mongodb:
     image: mongo:latest
     container_name: mongodb
@@ -12,7 +11,6 @@ services:
     networks:
       - app-network
 
-  # MySQL service
   mysql:
     image: mysql:8.0
     container_name: mysql
@@ -25,8 +23,13 @@ services:
       - "3306:3306"
     networks:
       - app-network
+    healthcheck:
+      test: ["CMD", "mysqladmin", "ping", "-h", "localhost"]
+      interval: 10s
+      retries: 5
+      start_period: 30s
+      timeout: 10s
 
-  # Zookeeper service
   zookeeper:
     image: wurstmeister/zookeeper
     container_name: zookeeper
@@ -35,7 +38,6 @@ services:
     networks:
       - app-network
 
-  # Kafka service
   kafka:
     image: wurstmeister/kafka
     container_name: kafka
@@ -49,7 +51,6 @@ services:
     networks:
       - app-network
 
-  # Spring Boot application service
   app:
     build:
       context: .  # Look for Dockerfile in the root directory
