@@ -1,0 +1,20 @@
+@startuml
+title Sample Class Diagram
+
+class Trade {
+    - tradeId: String
+    - version: int
+    - counterPartyId: String
+    - maturityDate: Date
+    - createdDate: Date
+    - expired: boolean
+}
+
+class TradeService {
+    + saveTrade(Trade trade): void
+    + getTrade(String tradeId): Trade
+}
+
+TradeService --> Trade : uses
+
+@enduml
