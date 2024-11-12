@@ -51,7 +51,7 @@ jobs:
 
       # Step 8: Generate PlantUML diagrams
       - name: List files in TradeStore/diagram
-        run: ls -R /workspace/diagram
+        run: ls -R /workspace/TradeStore/diagram
 
       - name: Generate PlantUML diagrams
         run: |
