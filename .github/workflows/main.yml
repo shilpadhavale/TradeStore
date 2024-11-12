@@ -26,12 +26,12 @@ jobs:
         uses: actions/cache@v3
         with:
           path: ~/.m2/repository
-          key: ${{ runner.os }}-maven-${{ hashFiles('**/pom.xml') }}
+          key: ${{ runner.os }}-maven-${{ hashFiles('**/mongo/demo/pom.xml') }}
           restore-keys: |
             ${{ runner.os }}-maven-
 
       - name: Run tests and build
-        run: mvn clean install -DskipTests=false
+        run: mvn -f mongo/demo/pom.xml clean install -DskipTests=false
 
       # Step 1: Install PlantUML
       - name: Install PlantUML
@@ -40,14 +40,14 @@ jobs:
       # Step 2: Generate PlantUML Diagrams (from .puml files)
       - name: Generate PlantUML diagrams
         run: |
-          plantuml src/main/resources/diagrams/*.puml
+          plantuml mongo/demo/src/main/resources/diagrams/*.puml
 
       # Step 3: Upload generated diagrams as build artifacts (for access after the build)
       - name: Upload PlantUML Diagrams as artifacts
         uses: actions/upload-artifact@v3
         with:
           name: plantuml-diagrams
-          path: src/main/resources/diagrams/*.png
+          path: mongo/demo/src/main/resources/diagrams/*.png
 
       # Step 4: Run OWASP Dependency Check
       - name: Run OWASP Dependency-Check
@@ -55,7 +55,7 @@ jobs:
         with:
           image: owasp/dependency-check
           options: --rm  # Cleanup after running
-          args: "--project 'Your Project Name' --scan /github/workspace --out reports/ --format ALL"
+          args: "--project 'Your Project Name' --scan /github/workspace/mongo/demo --out reports/ --format ALL"
         continue-on-error: false
 
       # Step 5: Run Snyk Security Vulnerability Scan (Optional)
@@ -67,7 +67,7 @@ jobs:
 
       # Step 6: Build and deploy the application
       - name: Build and Deploy (if all tests pass and no vulnerabilities detected)
-        run: mvn deploy
+        run: mvn -f mongo/demo/pom.xml deploy
         if: success()
 
   deploy:
@@ -82,7 +82,6 @@ jobs:
         uses: actions/setup-java@v3
         with:
           java-version: '17'
-          distribution: 'temurin'  # Use Temurin JDK distribution
 
       - name: Deploy Application
         run: |
