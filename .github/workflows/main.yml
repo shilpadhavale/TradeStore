@@ -48,10 +48,3 @@ jobs:
       # Step 7: Start Docker Compose services
       - name: Start services with Docker Compose
         run: docker-compose up -d
-
-      # Step 8: Generate PlantUML diagrams
-      - name: Generate PlantUML diagrams
-        run: |
-          curl -L https://github.com/plantuml/plantuml/releases/download/v1.2024.9/plantuml.jar -o plantuml.jar
-          java -jar plantuml.jar src/main/resources/diagrams/*.puml
-          mv *.png target/diagrams/
