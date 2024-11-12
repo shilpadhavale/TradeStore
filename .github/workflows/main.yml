@@ -51,8 +51,8 @@ jobs:
 
       # Step 8: Generate PlantUML diagrams
       - name: List contents of diagram folder
-        run: ls -R /workspace/diagram
+        run: ls -R /workspace/mongo/demo/diagram/
 
       - name: Generate PlantUML diagrams
         run: |
-          docker run --rm -v ${{ github.workspace }}:/workspace plantuml/plantuml /workspace/TradeStore/diagram/trade.puml
+          docker run --rm -v ${{ github.workspace }}:/workspace plantuml/plantuml /workspace/mongo/demo/diagram/trade.puml
