@@ -53,7 +53,7 @@ services:
 
   app:
     build:
-      context: .  # Look for Dockerfile in the root directory
+      context: ./mongo/demo  # Look for Dockerfile in the root directory
     environment:
       SPRING_DATASOURCE_URL: jdbc:mysql://mysql:3306/tradedb
       SPRING_DATASOURCE_USERNAME: root
