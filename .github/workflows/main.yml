@@ -50,8 +50,8 @@ jobs:
         run: docker-compose up -d
 
       # Step 8: Generate PlantUML diagrams
-      - name: List files in TradeStore/diagram
-        run: ls -R /workspace/TradeStore/diagram
+      - name: List files in Workspace/diagram
+        run: ls -R /workspace
 
       - name: Generate PlantUML diagrams
         run: |
