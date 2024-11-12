@@ -1,6 +1,7 @@
 version: '3.8'
 
 services:
+  # MongoDB service
   mongodb:
     image: mongo:latest
     container_name: mongodb
@@ -8,7 +9,10 @@ services:
       - "27017:27017"
     environment:
       MONGO_INITDB_DATABASE: tradedb
+    networks:
+      - app-network
 
+  # MySQL service
   mysql:
     image: mysql:8.0
     container_name: mysql
@@ -22,6 +26,7 @@ services:
     networks:
       - app-network
 
+  # Zookeeper service
   zookeeper:
     image: wurstmeister/zookeeper
     container_name: zookeeper
@@ -30,6 +35,7 @@ services:
     networks:
       - app-network
 
+  # Kafka service
   kafka:
     image: wurstmeister/kafka
     container_name: kafka
@@ -43,19 +49,22 @@ services:
     networks:
       - app-network
 
+  # Spring Boot application service
   app:
     build:
-      context: .
+      context: .  # Look for Dockerfile in the root directory
     environment:
       SPRING_DATASOURCE_URL: jdbc:mysql://mysql:3306/tradedb
       SPRING_DATASOURCE_USERNAME: root
       SPRING_DATASOURCE_PASSWORD: root
+      SPRING_DATA_MONGODB_URI: mongodb://mongodb:27017/tradedb
+      SPRING_KAFKA_BOOTSTRAP-SERVERS: kafka:9092
     depends_on:
       - mysql
       - mongodb
       - kafka
     ports:
-      - "8081:8081"
+      - "8081:8081"  # Expose the Spring Boot app on port 8081
     networks:
       - app-network
 
