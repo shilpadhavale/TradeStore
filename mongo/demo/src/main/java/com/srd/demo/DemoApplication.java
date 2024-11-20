@@ -5,12 +5,8 @@ import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
 import org.springframework.context.annotation.Bean;
 
-import com.srd.demo.entity.TradeMongo;
 import com.srd.demo.repo.jpa.TradeSqlRepo;
 import com.srd.demo.repo.mongo.TradeMongoRepo;
-import com.srd.demo.service.TradeMongoService;
-import com.srd.demo.service.TradeSqlService;
-import com.srd.demo.entity.Trade;
 
 @SpringBootApplication
 public class DemoApplication {
@@ -32,7 +28,7 @@ public class DemoApplication {
 
 		// create the trade object
 		System.out.println("Creating new Mongo trade ...");
-		TradeMongoService tMongoService = new TradeMongoService(tMongoRepo);
+		//TradeMongoService tMongoService = new TradeMongoService(tMongoRepo);
 		//TradeMongo tradeMongo = new TradeMongo("Shishir",132);
 		//tMongoService.saveTrade(tradeMongo);
 	}
@@ -40,8 +36,8 @@ public class DemoApplication {
 	private void createSqlTrade(TradeSqlRepo tradeSqlRepo)
 	{
 		System.out.println("Creating new SQL trade ...");
-		TradeSqlService tradeSqlService = new TradeSqlService(tradeSqlRepo);
-		Trade trade = new Trade(4,"Shishir",4,"Vyas");
-		tradeSqlService.saveTradeSql(trade);
+		//TradeSqlService tradeSqlService = new TradeSqlService(tradeSqlRepo);
+		//Trade trade = new Trade(4,"Shishir",4,"Vyas");
+		//tradeSqlService.saveTradeSql(trade);
 	}
 }

@@ -1,15 +1,17 @@
 package com.srd.demo.kafka.consumer;
 
-import com.srd.demo.entity.Trade;
-import com.srd.demo.entity.TradeMongo;
-import com.srd.demo.service.TradeSqlService;
-import com.srd.demo.service.TradeMongoService;
+import java.io.IOException;
+
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.kafka.annotation.KafkaListener;
 import org.springframework.stereotype.Component;
-import org.springframework.beans.factory.annotation.Autowired;
+
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.fasterxml.jackson.datatype.jsr310.JavaTimeModule;
-import java.io.IOException;
+import com.srd.demo.entity.Trade;
+import com.srd.demo.entity.TradeMongo;
+import com.srd.demo.service.TradeMongoService;
+import com.srd.demo.service.TradeSqlService;
 
 @Component
 public class MessageConsumer {
@@ -63,6 +65,7 @@ public class MessageConsumer {
         tradeMongo.setMaturityDate(trade.getMaturityDate());
         tradeMongo.setCreatedDate(trade.getCreatedDate());
         tradeMongo.setExpired(trade.isExpired());
+        tradeMongo.setId(trade.getId()+"");
         return tradeMongo;
     }
 }

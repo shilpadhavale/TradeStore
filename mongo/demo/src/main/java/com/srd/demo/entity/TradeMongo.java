@@ -1,9 +1,12 @@
 package com.srd.demo.entity;
 
-import jakarta.persistence.*;
-import org.springframework.data.mongodb.core.mapping.Document;
 import java.io.Serializable;
 import java.time.LocalDate;
+
+import org.springframework.data.mongodb.core.mapping.Document;
+
+import jakarta.persistence.Entity;
+import jakarta.persistence.Id;
 
 @Entity
 @Document(collection = "trades")  // Annotation for MongoDB
@@ -11,26 +14,15 @@ import java.time.LocalDate;
 public class TradeMongo implements Serializable {
 
     @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)  // JPA generated ID strategy
     private String id;
 
-    @Column(name = "trade_id", nullable = false)
     private String tradeId;
-
-    @Column(name = "version", nullable = false)
     private Integer version;
-
-    @Column(name = "counter_party_id", nullable = false)
     private String counterPartyId;
-
-    @Column(name = "maturity_date", nullable = false)
     private LocalDate maturityDate;
-
-    @Column(name = "created_date", nullable = false)
     private LocalDate createdDate;
-
-    @Column(name = "expired", nullable = false)
     private boolean expired;
+
 
     // Getters and Setters
     public String getId() {
