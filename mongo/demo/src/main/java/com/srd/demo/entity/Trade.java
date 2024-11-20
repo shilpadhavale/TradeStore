@@ -1,14 +1,23 @@
 package com.srd.demo.entity;
 
-import jakarta.persistence.*;
 import java.io.Serializable;
 import java.time.LocalDate;
+
+import com.fasterxml.jackson.annotation.JsonIgnore;
+
+import jakarta.persistence.Column;
+import jakarta.persistence.Entity;
+import jakarta.persistence.GeneratedValue;
+import jakarta.persistence.GenerationType;
+import jakarta.persistence.Id;
+import jakarta.persistence.Table;
 
 @Entity
 @Table(name = "trades")
 public class Trade implements Serializable {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
+    @JsonIgnore
     @Column(name="id")
     private int id;
 
@@ -35,7 +44,7 @@ public class Trade implements Serializable {
 
     // Parameterized constructor
     public Trade(int id, String tradeId, Integer version, String counterPartyId) {
-        this.id = id;
+       // this.id = id;
         this.tradeId = tradeId;
         this.version = version;
         this.counterPartyId = counterPartyId;

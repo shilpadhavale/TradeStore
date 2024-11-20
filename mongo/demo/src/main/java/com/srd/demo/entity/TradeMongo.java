@@ -3,18 +3,14 @@ package com.srd.demo.entity;
 import java.io.Serializable;
 import java.time.LocalDate;
 
+import org.springframework.data.annotation.Id;
 import org.springframework.data.mongodb.core.mapping.Document;
 
-import jakarta.persistence.Entity;
-import jakarta.persistence.Id;
-
-@Entity
-@Document(collection = "trades")  // Annotation for MongoDB
-
+@Document(collection = "trades")  // MongoDB-specific annotation
 public class TradeMongo implements Serializable {
 
     @Id
-    private String id;
+    private String id;  // MongoDB generates a unique ID for documents.
 
     private String tradeId;
     private Integer version;
@@ -22,7 +18,6 @@ public class TradeMongo implements Serializable {
     private LocalDate maturityDate;
     private LocalDate createdDate;
     private boolean expired;
-
 
     // Getters and Setters
     public String getId() {
