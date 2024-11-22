@@ -1,55 +1,59 @@
-name: Java CI/CD Pipeline with PlantUML
+name: Java CI/CD Pipeline with PlantUML  
 
-on:
-  push:
-    branches:
-      - main
-  pull_request:
-    branches:
-      - main
+on:  
+  push:  
+    branches:  
+      - main  
+  pull_request:  
+    branches:  
+      - main  
 
-jobs:
-  build:
-    runs-on: ubuntu-latest
+jobs:  
+  build:  
+    runs-on: ubuntu-latest  
 
-    steps:
-      # Step 1: Checkout code
-      - name: Checkout code
-        uses: actions/checkout@v3
+    steps:  
+      # Step 1: Checkout code  
+      - name: Checkout code  
+        uses: actions/checkout@v3  
 
-      # Step 2: Set up JDK 17
-      - name: Set up JDK 17
-        uses: actions/setup-java@v3
-        with:
-          java-version: '17'
-          distribution: 'temurin'
+      # Step 2: Set up JDK 17  
+      - name: Set up JDK 17  
+        uses: actions/setup-java@v3  
+        with:  
+          java-version: '17'  
+          distribution: 'temurin'  
 
-      # Step 3: Cache Maven dependencies
-      - name: Cache Maven dependencies
-        uses: actions/cache@v3
-        with:
-          path: ~/.m2/repository
-          key: ${{ runner.os }}-maven-${{ hashFiles('**/mongo/demo/pom.xml') }}
-          restore-keys: |
-            ${{ runner.os }}-maven-
+      # Step 3: Cache Maven dependencies  
+      - name: Cache Maven dependencies  
+        uses: actions/cache@v3  
+        with:  
+          path: ~/.m2/repository  
+          key: ${{ runner.os }}-maven-${{ hashFiles('**/mongo/demo/pom.xml') }}  
+          restore-keys: |  
+            ${{ runner.os }}-maven-  
 
-      # Step 4: Run Maven tests and build
-      - name: Run tests and build
-        run: mvn -f mongo/demo/pom.xml clean install -DskipTests=false
+      # Step 4: Run Maven tests and build  
+      - name: Run tests and build  
+        run: mvn -f mongo/demo/pom.xml clean install -DskipTests=false  
 
-      # Step 5: Set up Docker Compose
-      - name: Install Docker Compose
-        run: sudo apt-get install docker-compose -y
+      # Step 5: Set up Docker BuildKit (optional for better performance)  
+      - name: Set up Docker BuildKit  
+        run: echo "DOCKER_BUILDKIT=1" >> $GITHUB_ENV  
+      
+      # Step 6: Set up Docker  
+      - name: Set up Docker  
+        uses: docker/setup-buildx-action@v2  
 
-      # Step 6: Build Docker image
-      - name: Build Docker image
-        run: docker build -t my-app ./mongo/demo
+      # Step 7: Build Docker image  
+      - name: Build Docker image  
+        run: docker build -t my-app ./mongo/demo  
 
-      # Step 7: Start Docker Compose services
-      - name: Start services with Docker Compose
-        run: docker-compose up -d
+      # Step 8: Start Docker Compose services  
+      - name: Start services with Docker Compose  
+        run: docker-compose up -d  
 
-      # Step 8: Generate PlantUML diagrams
-      - name: Generate PlantUML diagrams
-        run: |
+      # Step 9: Generate PlantUML diagrams  
+      - name: Generate PlantUML diagrams  
+        run: |  
           docker run --rm -v ${{ github.workspace }}:/workspace plantuml/plantuml -o /workspace/mongo/demo/diagram /workspace/mongo/demo/diagram/trade.puml
